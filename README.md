@@ -1,6 +1,6 @@
 # Wordle Solver
 
-The following code is a simple way of tackling the popular game, **Wordle[https://www.powerlanguage.co.uk/wordle/]**. It uses a fairly simple way of solving the words by a combination of deduction and guessing. It is a very basic solution which doesn't use automation, but instead depends on user input for operation. It works in these simple steps:
+The following code is a simple way of tackling the popular game, **[Wordle](https://www.powerlanguage.co.uk/wordle/)**. It uses a fairly simple way of solving the words by a combination of deduction and guessing. It is a very basic solution which doesn't use automation, but instead depends on user input for operation. It works in these simple steps:
 
 **Steps:**
 * **Step 1:** Type in whatever word you want in the actual game and copy the word into the prompt given when the program is run.
@@ -8,9 +8,9 @@ The following code is a simple way of tackling the popular game, **Wordle[https:
 * **Step 3:** The program will output a list of valid words, any of which you can choose and write in the next line.
 * **Step 4:** Repeat these steps till either you get the answer or you run out of turns.
 
-This **YouTube[https://youtu.be/UVlnRTjWnVc]** video shows the algorithm in action:
+This **[YouTube](https://youtu.be/UVlnRTjWnVc)** video shows the algorithm in action:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UVlnRTjWnVc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![WORDLE SOLVER](assets/thumbnail.png)](https://www.youtube.com/watch?v=UVlnRTjWnVc)
 
 The solver has been coded in python and is fairly simple:
 
