@@ -41,15 +41,15 @@ while len(final_wordlist) !=0 or count < 6:
 
     for key in wordlist:
         for color, letter, position in zip(color_scheme, word, position_list):
-            if color == 'g' or color == 'G':
+            if color.lower() == 'g':
                 if letter != key[position]:
                     if key not in altered_wordlist:
                         altered_wordlist.append(key)
-            elif color == 'y' or color == 'Y':
-                if letter not in key:
+            elif color.lower() == 'y':
+                if letter not in key or letter == key[position]:
                     if key not in altered_wordlist:
                         altered_wordlist.append(key)
-            elif color == 'b' or color == 'B':
+            elif color.lower() == 'b':
                 if letter in key:
                     if key not in altered_wordlist:
                         altered_wordlist.append(key)
