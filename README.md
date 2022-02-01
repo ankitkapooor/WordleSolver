@@ -16,19 +16,19 @@ The solver has been coded in python and is fairly simple:
 
 ~~~python
 for key in wordlist:
-      for color, letter, position in zip(color_scheme, word, position_list):
-          if color == 'g' or color == 'G':
-              if letter != key[position]:
-                  if key not in altered_wordlist:
-                      altered_wordlist.append(key)
-          elif color == 'y' or color == 'Y':
-              if letter not in key:
-                  if key not in altered_wordlist:
-                      altered_wordlist.append(key)
-          elif color == 'b' or color == 'B':
-              if letter in key:
-                  if key not in altered_wordlist:
-                      altered_wordlist.append(key)
+  for color, letter, position in zip(color_scheme, word, position_list):
+      if color.lower() == 'g':
+          if letter != key[position]:
+              if key not in altered_wordlist:
+                  altered_wordlist.append(key)
+      elif color.lower() == 'y':
+          if letter not in key or letter == key[position]:
+              if key not in altered_wordlist:
+                  altered_wordlist.append(key)
+      elif color.lower() == 'b':
+          if letter in key:
+              if key not in altered_wordlist:
+                  altered_wordlist.append(key)
 ~~~
 
 The following snippet of code instructs the algorithm which words to eliminate based on the color scheme input by the user. It takes two inputs from the user: **word** and **color scheme**.
