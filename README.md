@@ -56,7 +56,7 @@ def scoredlist(final_wordlist):
     return [*wordscoredict]
 ~~~
 
-The following function, **scoredlist** ranks the outputs based on the probability of getting maximum greens. It does this by ranking each word by how probable it is to appear. A normalized score of each letter in the alphabet is calculated based on how frequently it appears in a given position in the entire dataset. These rankings are then compounded to find out the ranking of each word in the **final_wordlist**. These words paired with their ranking are stored in a dictionary, **wordscoredict**, where they are sorted from highest to lowest rank to maximize the probability of winning the game in as few rounds as possible.
+The following function, **scoredlist** ranks the outputs based on the probability of getting maximum greens. It does this by ranking each word by how probable it is to appear. A normalized score of each letter in the alphabet is calculated based on how frequently it appears in a given position in the entire dataset. These rankings are then compounded to find out the ranking of each word in the **final_wordlist**. These words paired with their ranking are stored in a dictionary, **wordscoredict**, where they are sorted from highest to lowest rank to maximize the probability of winning the game in as few rounds as possible. The dataset of 5-letter words was taken from **[here](https://www-cs-faculty.stanford.edu/~knuth/sgb-words.txt)**.
 
 ![an image of the algorithm in action](assets/sample.png)
 
