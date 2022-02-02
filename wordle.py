@@ -27,10 +27,6 @@ def game_logic(color_scheme, word, position_list, wordlist):
             final_wordlist.append(wordlist[i])
     return scoredlist(final_wordlist)[:5]
 
-with open("assets/words.csv", 'r', encoding = 'utf-8') as f:
-    for i in range(5757):
-        wordlist.append(f.readline()[:5])
-
 #function to score the words for maximum probability of getting greens
 def scoredlist(final_wordlist):
     alphabets = list(map(chr, range(97, 123)))
@@ -52,6 +48,10 @@ def scoredlist(final_wordlist):
         wordscoredict.update({word : wse})
     wordscoredict = dict(sorted(wordscoredict.items(), key=operator.itemgetter(1) ,reverse=True))
     return [*wordscoredict]
+
+with open("assets/words.csv", 'r', encoding = 'utf-8') as f:
+    for i in range(5757):
+        wordlist.append(f.readline()[:5])
 
 #continuous while loop allows guessing till either the algorithm runs out of answers
 #or the game crosses 6 turns
