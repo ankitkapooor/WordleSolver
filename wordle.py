@@ -3,12 +3,12 @@ import operator
 wordlist = []
 altered_wordlist = []
 final_wordlist = []
-position_list = [0,1,2,3,4]
+position_list = [_ for _ in range(5)]
 count = 0
 
 #function to score the words for maximum probability of getting greens
 def scoredlist(final_wordlist):
-    alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    alphabets = list(map(chr, range(97, 123)))
     scoredict = {}
     wordscoredict = {}
     sum = 0
@@ -28,17 +28,8 @@ def scoredlist(final_wordlist):
     wordscoredict = dict(sorted(wordscoredict.items(), key=operator.itemgetter(1) ,reverse=True))
     return [*wordscoredict]
 
-with open("assets/words.csv", 'r', encoding = 'utf-8') as f:
-    for i in range(5757):
-        wordlist.append(f.readline()[:5])
-
-#continuous while loop allows guessing till either the algorithm runs out of answers
-#or the game crosses 6 turns
-while len(final_wordlist) !=0 or count < 6:
-    final_wordlist = []
-    word = input("\tinput the word: ")
-    color_scheme = input("\tInput the color scheme(b/g/y): ")
-
+#function applys the game rule and eliminates redundant words from the word list
+def game_logic(color_scheme, word, position_list, wordlist):
     for key in wordlist:
         for color, letter, position in zip(color_scheme, word, position_list):
             if color.lower() == 'g':
@@ -56,5 +47,19 @@ while len(final_wordlist) !=0 or count < 6:
     for i in range(len(altered_wordlist)):
         if wordlist[i] not in altered_wordlist:
             final_wordlist.append(wordlist[i])
-    print(*scoredlist(final_wordlist))
+    return scoredlist(final_wordlist)[:5]
+
+with open("assets/words.csv", 'r', encoding = 'utf-8') as f:
+    for i in range(5757):
+        wordlist.append(f.readline()[:5])
+
+#continuous while loop allows guessing till either the algorithm runs out of answers
+#or the game crosses 6 turns
+while len(final_wordlist) !=0 or count < 6:
+    final_wordlist = []
+    word = input("\tinput the word: ")
+    color_scheme = input("\tInput the color scheme(b/g/y): ")
+    print("\tTop 5 options:", end = " ")
+    print(*game_logic(color_scheme, word, position_list, wordlist), end = " ")
+    print("\n")
     count += 1
