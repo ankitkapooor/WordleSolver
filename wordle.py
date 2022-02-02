@@ -6,28 +6,6 @@ final_wordlist = []
 position_list = [_ for _ in range(5)]
 count = 0
 
-#function to score the words for maximum probability of getting greens
-def scoredlist(final_wordlist):
-    alphabets = list(map(chr, range(97, 123)))
-    scoredict = {}
-    wordscoredict = {}
-    sum = 0
-    wse=0
-    for alphabet in alphabets:
-        for word in wordlist:
-            for i in range(5):
-                if alphabet == word[i]:
-                    sum += 1
-                score = sum / 5757
-                scoredict.update({alphabet : score})
-
-    for word in final_wordlist:
-        for letter in word:
-            wse =+ scoredict.get(letter)
-        wordscoredict.update({word : wse})
-    wordscoredict = dict(sorted(wordscoredict.items(), key=operator.itemgetter(1) ,reverse=True))
-    return [*wordscoredict]
-
 #function applys the game rule and eliminates redundant words from the word list
 def game_logic(color_scheme, word, position_list, wordlist):
     for key in wordlist:
@@ -52,6 +30,28 @@ def game_logic(color_scheme, word, position_list, wordlist):
 with open("assets/words.csv", 'r', encoding = 'utf-8') as f:
     for i in range(5757):
         wordlist.append(f.readline()[:5])
+
+#function to score the words for maximum probability of getting greens
+def scoredlist(final_wordlist):
+    alphabets = list(map(chr, range(97, 123)))
+    scoredict = {}
+    wordscoredict = {}
+    sum = 0
+    wse=0
+    for alphabet in alphabets:
+        for word in wordlist:
+            for i in range(5):
+                if alphabet == word[i]:
+                    sum += 1
+                score = sum / 5757
+                scoredict.update({alphabet : score})
+
+    for word in final_wordlist:
+        for letter in word:
+            wse =+ scoredict.get(letter)
+        wordscoredict.update({word : wse})
+    wordscoredict = dict(sorted(wordscoredict.items(), key=operator.itemgetter(1) ,reverse=True))
+    return [*wordscoredict]
 
 #continuous while loop allows guessing till either the algorithm runs out of answers
 #or the game crosses 6 turns
