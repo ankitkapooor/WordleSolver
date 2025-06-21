@@ -68,6 +68,56 @@
         });
       };
 
+      const checkEliminationOpportunity = (candidates, feedback, fullWordlist) => {
+        if (candidates.length <= 2) return null;
+        
+        const greenCount = feedback.filter(f => f === 'g').length;
+        const blackCount = feedback.filter(f => f === 'b').length;
+        
+        // We need exactly 4 greens and 1 black
+        if (greenCount !== 4 || blackCount !== 1) return null;
+        
+        // Find the position that varies (where we had the black feedback)
+        const varyingPosition = feedback.findIndex(f => f === 'b');
+        if (varyingPosition === -1) return null;
+        
+        // Get the letters that differ at this position
+        const differingLetters = new Set();
+        candidates.forEach(word => {
+          differingLetters.add(word[varyingPosition]);
+        });
+        
+        // We need at least 3 different letters to make this worthwhile
+        if (differingLetters.size < 3) return null;
+        
+        // Find a word from the full wordlist that contains as many of these letters as possible
+        let bestEliminationWord = null;
+        let maxLettersCovered = 0;
+        
+        for (const word of fullWordlist) {
+          if (candidates.includes(word)) continue; // Skip words that are already candidates
+          
+          const lettersCovered = [...differingLetters].filter(letter => word.includes(letter)).length;
+          
+          // Prioritize words that cover more differing letters
+          if (lettersCovered > maxLettersCovered && lettersCovered >= 3) {
+            maxLettersCovered = lettersCovered;
+            bestEliminationWord = word;
+          }
+        }
+        
+        if (bestEliminationWord && maxLettersCovered >= 3) {
+          return {
+            word: bestEliminationWord,
+            lettersCovered: maxLettersCovered,
+            differingLetters: [...differingLetters],
+            varyingPosition: varyingPosition
+          };
+        }
+        
+        return null;
+      };
+
       /* ---------- React component ---------- */
       const WordleSolver = () => {
         const [candidates, setCandidates] = React.useState(WORD_LIST);
@@ -123,7 +173,20 @@
           setGuessInput('');
         };
 
-        const suggestions = scoreWords(candidates, scoreLetters(candidates)).slice(0, 5);
+        // Check for strategic elimination opportunity
+        let suggestions;
+        const lastFeedback = history.length > 0 ? history[history.length - 1][1] : null;
+        const eliminationOpportunity = lastFeedback ? checkEliminationOpportunity(candidates, lastFeedback.split(''), WORD_LIST) : null;
+        
+        if (eliminationOpportunity) {
+          // Compute standard ranked suggestions
+          const rankedWords = scoreWords(candidates, scoreLetters(candidates));
+          // Put the recommended elimination word at the front of the suggestions list
+          suggestions = [eliminationOpportunity.word, ...rankedWords.filter(w => w !== eliminationOpportunity.word)].slice(0, 5);
+        } else {
+          // Regular scoring and suggestions
+          suggestions = scoreWords(candidates, scoreLetters(candidates)).slice(0, 5);
+        }
 
         return (
           <div className="max-w-md mx-auto p-6 bg-white min-h-screen">
