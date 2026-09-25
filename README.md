@@ -8,6 +8,24 @@ The following code is a simple way of tackling the popular game, **[Wordle](http
 * **Step 3:** The program will output a list of valid words, any of which you can choose and write in the next line.
 * **Step 4:** Repeat these steps till either you get the answer or you run out of turns.
 
+## Web version: [wordle.ankitkapoor.me](https://wordle.ankitkapoor.me)
+
+The solver also runs as a static website with no server. [`site/solver.js`](site/solver.js) is a port of `wordle_v2.py` that runs entirely in the browser, so it can be hosted on Cloudflare Workers instead of Streamlit.
+
+| Path | What it is |
+| --- | --- |
+| `site/` | The website: `index.html`, `styles.css`, `app.js` (UI), `solver.js` (logic), `words.txt` (copy of `assets/words.csv`) |
+| `wrangler.jsonc` | Cloudflare config; serves `site/` and attaches the `wordle.ankitkapoor.me` custom domain |
+| `test/` | Solver tests (`npm test`) |
+
+~~~bash
+npm install
+npm run dev      # http://localhost:8787
+npm test
+npx wrangler login   # once
+npm run deploy
+~~~
+
 This **[YouTube](https://youtu.be/UVlnRTjWnVc)** video shows the algorithm in action:
 
 [![WORDLE SOLVER](assets/thumbnail.png)](https://www.youtube.com/watch?v=UVlnRTjWnVc)

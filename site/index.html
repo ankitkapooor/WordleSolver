@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Wordle Solver · Ankit Kapoor</title>
+    <meta name="description" content="Enter your Wordle guesses and the colors you got back; get the best next words to play." />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121213" media="(prefers-color-scheme: dark)" />
+    <meta property="og:title" content="Wordle Solver" />
+    <meta property="og:description" content="Enter your Wordle guesses and colors; get the best next words to play." />
+    <meta property="og:url" content="https://wordle.ankitkapoor.me/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+    <script type="module" src="/app.js"></script>
+  </head>
+  <body>
+    <main class="app">
+      <header class="masthead">
+        <h1>Wordle Solver</h1>
+        <p class="lede">Type the word you played, tap each tile until it matches Wordle's colors, then press Enter.</p>
+      </header>
+
+      <section class="board" id="board" aria-label="Your guesses"></section>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+
+      <div class="actions">
+        <button type="button" class="btn" id="undo">Undo</button>
+        <button type="button" class="btn" id="reset">New game</button>
+        <button type="button" class="btn btn-primary" id="submit">Submit guess</button>
+      </div>
+
+      <section class="panel" aria-labelledby="suggestions-title">
+        <div class="panel-head">
+          <h2 id="suggestions-title">Best next guesses</h2>
+          <span class="count" id="count"></span>
+        </div>
+        <div id="suggestions"><p class="note">Loading word list…</p></div>
+        <details class="all-words" id="all-words" hidden>
+          <summary id="all-words-summary"></summary>
+          <div class="word-grid" id="word-grid"></div>
+        </details>
+      </section>
+
+      <section class="keyboard" id="keyboard" aria-label="Keyboard"></section>
+
+      <details class="about">
+        <summary>How it works</summary>
+        <p>
+          Every guess filters a list of 5,757 five-letter words. A green letter must be in that spot, a yellow letter is in
+          the word but somewhere else, and a gray letter doesn't appear, or appears no more often than its green and yellow
+          copies.
+        </p>
+        <p>
+          The remaining words are ranked by how common their letters are among the words still possible, so the top pick
+          tells you the most about the answer. When you're stuck on a pattern like <b>_ATCH</b> with several letters that
+          could fill the gap, the solver suggests a word that tests several of those letters at once, even though it
+          can't be the answer itself.
+        </p>
+        <p class="note">Tip: on a keyboard, press 1–5 to cycle a tile's color.</p>
+      </details>
+
+      <footer class="footer">
+        Built by <a href="https://ankitkapoor.me">Ankit Kapoor</a> ·
+        <a href="https://github.com/ankitkapooor/WordleSolver">Source on GitHub</a>
+      </footer>
+    </main>
+  </body>
+</html>

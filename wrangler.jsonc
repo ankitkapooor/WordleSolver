@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "wordle-solver",
+  "compatibility_date": "2026-09-01",
+  // Static site only: every file in ./site is served as-is, no Worker script needed
+  "assets": {
+    "directory": "./site",
+    "not_found_handling": "404-page"
+  },
+  // Attaches the subdomain and creates its DNS record + certificate on deploy
+  "routes": [{ "pattern": "wordle.ankitkapoor.me", "custom_domain": true }]
+}
